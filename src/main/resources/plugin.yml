@@ -1,0 +1,25 @@
+name: SongMaker
+version: ${project.version}
+main: me.sendpacket.songmaker.song_maker
+api-version: 1.13
+commands:
+  stopp:
+    description: stopp
+    permission: test.foo
+    permission-message: You do not have permission!
+    usage: /<command> [name]
+  create:
+    description: create
+    permission: test.foo
+    permission-message: You do not have permission!
+    usage: /<command> [name]
+  list:
+    description: list
+    permission: test.foo
+    permission-message: You do not have permission!
+    usage: /<command>
+  play:
+    description: play
+    permission: test.foo
+    permission-message: You do not have permission!
+    usage: /<command> [name]
