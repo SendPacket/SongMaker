@@ -9,14 +9,14 @@ public class utils {
     {
         global_values.word_list.clear();
 
-        File f = song_maker.plugin.getDataFolder();
+        File f = song_maker.get_java_plugin().getDataFolder();
 
-        if(!song_maker.plugin.getDataFolder().exists())
+        if(!song_maker.get_java_plugin().getDataFolder().exists())
         {
-            song_maker.plugin.getDataFolder().mkdir();
+            song_maker.get_java_plugin().getDataFolder().mkdir();
         }
 
-        f = new File(song_maker.plugin.getDataFolder() + "/words.txt");
+        f = new File(song_maker.get_java_plugin().getDataFolder() + "/words.txt");
 
         if(f.exists())
         {
