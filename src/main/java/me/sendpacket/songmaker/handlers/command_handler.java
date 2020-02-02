@@ -33,28 +33,29 @@ public class command_handler {
                         try {
                             switch (args[0]) {
                                 case "gui":
-                                    song_maker.get_gui_handler().open_main_menu(p);
+                                    song_maker.get_gui_handler().open_main_menu(p); // Open GUI
                                     break;
                                 case "clear":
-                                    player.clear(p);
+                                    player.clear(p); // Clear ArrayLists
                                     break;
                                 case "help":
-                                    display_help(p);
+                                    display_help(p); // Display help
                                     break;
                                 case "stop":
-                                    player.stop(p);
+                                    player.stop(p); // Stop song
                                     break;
                                 case "remove":
                                     if (args[1].length() > 0) {
-                                        player.remove(p, args[1]);
+                                        player.remove(p, args[1]); // Remove song
                                     }
                                     break;
                                 case "create":
                                     if (args[1].length() > 0 && args[2].length() > 0) {
-                                        player.create(p, args[1], args[2]);
+                                        player.create(p, args[1], args[2]); // Create new song
                                     }
                                     break;
                                 case "list":
+                                    // Display songs
                                     song_maker.get_logger_handler().send_message(p, "--------Song-List--------");
                                     for (song s : global_values.song_list) {
                                         song_maker.get_logger_handler().send_message(p, s.get_name());
@@ -62,7 +63,7 @@ public class command_handler {
                                     break;
                                 case "play":
                                     if (args[1].length() > 0) {
-                                        player.play(p, args[1]);
+                                        player.play(p, args[1]); // Play song with name
                                     }
                                     break;
                                 default:

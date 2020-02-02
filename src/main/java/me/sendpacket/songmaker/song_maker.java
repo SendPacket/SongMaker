@@ -20,33 +20,24 @@ public final class song_maker extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        plugin = this;
-        cmd_handler = new command_handler();
-        logger_handler = new logger_handler();
-        gui_handler = new gui_handler();
-        Bukkit.getServer().getPluginManager().registerEvents(gui_handler, this);
-        gui_handler.load_menu();
-        utils.load_words();
-
-        update();
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
-    public void update()
-    {
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            player.update_song();
-        },0L,40L);
+        ////////////////////////////////////
+        plugin = this; // Initialize variable
+        ////////////////////////////////////
+        cmd_handler = new command_handler(); // Initialize variable
+        logger_handler = new logger_handler(); // Initialize variable
+        gui_handler = new gui_handler(); // Initialize variable
+        gui_handler.load_menu(); // Initialize variables and set inventory contents
+        ////////////////////////////////////
+        utils.load_words(); // Add words from text file to arraylist
+        player.update_song(); // Start update thread
+        ////////////////////////////////////
+        Bukkit.getServer().getPluginManager().registerEvents(gui_handler, this); // Register events for InventoryClickEvent
+        ////////////////////////////////////
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        cmd_handler.onCommand(sender,command,label,args);
+        cmd_handler.onCommand(sender,command,label,args); // Redirect to command handler
         return true;
     }
 

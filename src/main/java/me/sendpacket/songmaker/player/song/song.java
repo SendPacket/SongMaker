@@ -11,10 +11,10 @@ public class song {
         this.current_line = 0;
     }
 
-    String name;
-    boolean playing;
     ArrayList<song_line> lines = new ArrayList<song_line>();
     int current_line;
+    boolean playing;
+    String name;
 
     public String get_name()
     {

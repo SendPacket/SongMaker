@@ -41,23 +41,23 @@ public class gui_handler implements Listener {
 
     public void update_song_menu()
     {
-        int inv_size = 9;
+        int inv_size = 9; // Initialize variable
 
-        if(global_values.song_list.size() > inv_size)
+        while(global_values.song_list.size() > inv_size) // If song amount higher than inventory size
         {
-            inv_size += 9;
+            inv_size += 9; // Make inventory bigger
         }
 
-        if(inv_size > 36)
+        if(inv_size > 36) // If inventory size too high
         {
-            inv_size = 36;
+            inv_size = 36; // Limit inventory size
         }
 
         song_inv = Bukkit.createInventory(null, inv_size, global_values.menu_prefix + ChatColor.DARK_GRAY + " Songs");
         utils.add_item_background(utils.create_inventory_item(Material.CYAN_STAINED_GLASS_PANE, " "), song_inv);
 
         try {
-            for (int i = 0; i < 36; i++) {
+            for (int i = 0; i < 36; i++) { // Fill inventory with songs in arraylist
                 song s = global_values.song_list.get(i);
                 if (s != null) {
                     song_inv.setItem(i, utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE, s.get_name()));
@@ -68,21 +68,24 @@ public class gui_handler implements Listener {
 
     public void change_inventory(Player p, Inventory inv)
     {
+        // Close current and open new inventory
         p.closeInventory();
         p.openInventory(inv);
     }
 
     public void open_main_menu(Player p)
     {
+        // Open main inventory
         p.openInventory(main_inv);
     }
 
     @EventHandler
     public void onInventory(InventoryClickEvent e)
     {
-        if(e.getWhoClicked() instanceof Player) {
+        if(e.getWhoClicked() instanceof Player) { // If player
             Player p = (Player) e.getWhoClicked();
-            if (e.getInventory().equals(main_inv)) {
+
+            if (e.getInventory().equals(main_inv)) { // If inventory is main menu
                 switch (e.getSlot()) {
                     case 0:
                         change_inventory(p, pre_song_inv);
@@ -90,7 +93,7 @@ public class gui_handler implements Listener {
                     case 4:
                         break;
                     case 8:
-                        player.stop(p);
+                        player.stop(p); // Stop player
                         break;
                     default:
                         break;
@@ -101,7 +104,7 @@ public class gui_handler implements Listener {
             if (e.getInventory().equals(pre_song_inv)) {
                 switch (e.getSlot()) {
                     case 1:
-                        update_song_menu();
+                        update_song_menu(); // Update song inventory
                         change_inventory(p, song_inv);
                         break;
                     default:
@@ -113,7 +116,7 @@ public class gui_handler implements Listener {
             if (e.getInventory().equals(song_inv)) {
                 ItemStack item = song_inv.getItem(e.getSlot());
                 if(item != null) {
-                    player.change(item.getItemMeta().getDisplayName());
+                    player.change(item.getItemMeta().getDisplayName()); // Change song to slot name
                 }
                 e.setCancelled(true);
             }
