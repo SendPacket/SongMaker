@@ -36,8 +36,7 @@ public class song {
     {
         return this.current_line;
     }
-    public void next_line()
-    {
+    public void next_line() {
         if((this.current_line + 1) > lines.size())
         {
             this.current_line = 0;

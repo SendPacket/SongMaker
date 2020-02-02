@@ -1,8 +1,16 @@
 package me.sendpacket.songmaker;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.block.data.type.GlassPane;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class utils {
     public static void load_words()
@@ -73,4 +81,22 @@ public class utils {
         return "";
     }
 
+    public static ItemStack create_inventory_item(Material material, String name, String...lore) {
+        ItemStack item = new ItemStack(material, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        ArrayList<String> metaLore = new ArrayList<String>();
+        for(String loreComments : lore) {
+            metaLore.add(loreComments);
+        }
+        meta.setLore(metaLore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static void add_item_background(ItemStack item, Inventory inv) {
+        for (int i = 0; i < inv.getSize(); i++) {
+            inv.setItem(i,item);
+        }
+    }
 }
