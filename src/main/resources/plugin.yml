@@ -3,10 +3,6 @@ version: ${project.version}
 main: me.sendpacket.songmaker.song_maker
 api-version: 1.13
 commands:
-  songmaker:
-    description: songmaker
-    permission: test.foo
-    permission-message: You do not have permission!
   smk:
     description: smk
     permission: test.foo
