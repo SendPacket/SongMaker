@@ -34,6 +34,7 @@ public class command_handler {
                             case "help":
                                 display_help(p);
                                 break;
+
                             case "stop":
                                 if (global_values.current_song != null) {
                                     global_values.current_song.stop();
@@ -42,6 +43,7 @@ public class command_handler {
                                     song_maker.get_logger_handler().send_message(p, "Currently not playing song.");
                                 }
                                 break;
+
                             case "remove":
                                 try {
                                     if (args[1].length() > 0) {
@@ -64,6 +66,7 @@ public class command_handler {
                                     song_maker.get_logger_handler().send_message(p, "Usage: remove [name]");
                                 }
                                 break;
+
                             case "create":
                                 try {
                                     if (args[1].length() > 0 && args[2].length() > 0) {
@@ -94,11 +97,13 @@ public class command_handler {
                                     song_maker.get_logger_handler().send_message(p, "Usage: create [name to rhyme] [name]");
                                 }
                                 break;
+
                             case "list":
                                 for (song s : global_values.song_list) {
                                     song_maker.get_logger_handler().send_message(p, s.get_name());
                                 }
                                 break;
+
                             case "play":
                                 try {
                                     if (args[1].length() > 0) {
