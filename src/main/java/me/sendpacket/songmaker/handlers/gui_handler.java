@@ -1,10 +1,10 @@
 package me.sendpacket.songmaker.handlers;
 
 import me.sendpacket.songmaker.global_values;
-import me.sendpacket.songmaker.player.beat;
+import me.sendpacket.songmaker.player.beat.beat;
+import me.sendpacket.songmaker.player.beat.note;
 import me.sendpacket.songmaker.player.player;
 import me.sendpacket.songmaker.player.song.song;
-import me.sendpacket.songmaker.song_maker;
 import me.sendpacket.songmaker.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +31,7 @@ public class gui_handler implements Listener {
     public void load_menu()
     {
         tmp_beat = new beat("tmp_beat");
+        global_values.testing_beat = false;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         main_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + " Main Menu");
         utils.add_item_background(utils.create_inventory_item(Material.CYAN_STAINED_GLASS_PANE, " "), main_inv);
@@ -67,10 +68,11 @@ public class gui_handler implements Listener {
         utils.add_item_background(utils.create_inventory_item(Material.GRAY_STAINED_GLASS_PANE, " "), create_beat_inv);
         create_beat_inv.setItem(35, utils.create_inventory_item(Material.ORANGE_STAINED_GLASS_PANE, ChatColor.GREEN+" Save"));
         create_beat_inv.setItem(34, utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE, ChatColor.RED+" Return"));
+        create_beat_inv.setItem(32, utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE, ChatColor.GREEN+" Test"));
         for(int i = 0; i < 20; i++)
         {
             Material mat = Material.RED_STAINED_GLASS_PANE;
-            switch(tmp_beat.get_sequence().get(i))
+            switch(tmp_beat.get_sequence().get(i).get_s_num())
             {
                 case 1:
                     mat = Material.PURPLE_STAINED_GLASS_PANE;
@@ -81,10 +83,13 @@ public class gui_handler implements Listener {
                 case 3:
                     mat = Material.CYAN_STAINED_GLASS_PANE;
                     break;
+                case 4:
+                    mat = Material.GREEN_STAINED_GLASS_PANE;
+                    break;
                 default:
                     break;
             }
-            create_beat_inv.setItem(i, utils.create_inventory_item(mat, "Sound " + tmp_beat.get_sequence().get(i)));
+            create_beat_inv.setItem(i, utils.create_inventory_item(mat, "Sound " + tmp_beat.get_sequence().get(i).get_s_num(), tmp_beat.get_sequence().get(i).get_s_num() > 0 ? "Pitch: " + tmp_beat.get_sequence().get(i).get_pitch() : ""));
         }
     }
 
@@ -120,7 +125,7 @@ public class gui_handler implements Listener {
     public void update_beat_menu()
     {
         int inv_size = 9; // Initialize variable
-        
+
         while(global_values.beat_list.size() > inv_size) // If song amount higher than inventory size
         {
             inv_size += 9; // Make inventory bigger
@@ -141,7 +146,7 @@ public class gui_handler implements Listener {
                     String sequence_string = "[";
                     for(int x = 0; x < 20; x++)
                     {
-                        sequence_string += (x == 19 ? b.get_sequence().get(x) + "]" : b.get_sequence().get(x) + ",");
+                        sequence_string += (x == 19 ? b.get_sequence().get(x).get_s_num() + "]" : b.get_sequence().get(x).get_s_num() + ",");
                     }
                     beat_inv.setItem(i, utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE, b.get_name(), ChatColor.GOLD+sequence_string));
                 }
@@ -230,6 +235,7 @@ public class gui_handler implements Listener {
                         change_inventory(p, beat_inv);
                         break;
                     case 3:
+                        player.stop(p);
                         update_create_beat_menu();
                         change_inventory(p, create_beat_inv);
                         break;
@@ -267,13 +273,56 @@ public class gui_handler implements Listener {
                 {
                     change_inventory(p, pre_beat_inv);
                 }else {
-                    if (e.getSlot() <= 20) {
-                        int next_i = tmp_beat.get_sequence().get(e.getSlot()) + 1;
+                    if (e.getSlot() <= 19) {
+                        int next_i = tmp_beat.get_sequence().get(e.getSlot()).get_s_num() + 1;
+                        int next_pitch = tmp_beat.get_sequence().get(e.getSlot()).get_pitch() + 1;
                         if (e.isShiftClick()) {
-                            tmp_beat.get_sequence().put(e.getSlot(), 0);
+                            tmp_beat.get_sequence().put(e.getSlot(), new note(0, 1));
                         } else {
-                            if (next_i > 3) next_i = 0;
-                            tmp_beat.get_sequence().put(e.getSlot(), next_i);
+                            if(e.isLeftClick()) {
+                                if (next_i > 4) next_i = 0;
+
+                                tmp_beat.get_sequence().put(e.getSlot(), new note(next_i, tmp_beat.get_sequence().get(e.getSlot()).get_pitch()));
+                                switch (next_i) {
+                                    case 1:
+                                        p.playSound(p.getLocation(), global_values.sound_1, 1.F, tmp_beat.get_sequence().get(e.getSlot()).get_pitch());
+                                        break;
+                                    case 2:
+                                        p.playSound(p.getLocation(), global_values.sound_2, 1.F, tmp_beat.get_sequence().get(e.getSlot()).get_pitch());
+                                        break;
+                                    case 3:
+                                        p.playSound(p.getLocation(), global_values.sound_3, 1.F, tmp_beat.get_sequence().get(e.getSlot()).get_pitch());
+                                        break;
+                                    case 4:
+                                        p.playSound(p.getLocation(), global_values.sound_4, 1.F, tmp_beat.get_sequence().get(e.getSlot()).get_pitch());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }else{
+                                if(e.isRightClick() && tmp_beat.get_sequence().get(e.getSlot()).get_s_num() > 0)
+                                {
+                                    if(next_pitch > 2) next_pitch = 1;
+
+                                    tmp_beat.get_sequence().put(e.getSlot(), new note(tmp_beat.get_sequence().get(e.getSlot()).get_s_num(), next_pitch));
+                                    switch (tmp_beat.get_sequence().get(e.getSlot()).get_s_num()) {
+                                        case 1:
+                                            p.playSound(p.getLocation(), global_values.sound_1, 1.F, next_pitch);
+                                            break;
+                                        case 2:
+                                            p.playSound(p.getLocation(), global_values.sound_2, 1.F, next_pitch);
+                                            break;
+                                        case 3:
+                                            p.playSound(p.getLocation(), global_values.sound_3, 1.F, next_pitch);
+                                            break;
+                                        case 4:
+                                            p.playSound(p.getLocation(), global_values.sound_4, 1.F, next_pitch);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
                         }
                         update_create_beat_menu();
                     } else {
@@ -283,6 +332,12 @@ public class gui_handler implements Listener {
                                 new_beat.set_sequence(tmp_beat.get_sequence());
                                 global_values.beat_list.add(new_beat);
                                 update_create_beat_menu();
+                                break;
+                            case 32:
+                                global_values.current_beat_timer = 0;
+                                global_values.testing_beat = true;
+                                global_values.current_beat = tmp_beat;
+                                global_values.current_beat.play();
                                 break;
                             default:
                                 break;

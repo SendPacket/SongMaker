@@ -1,8 +1,9 @@
 package me.sendpacket.songmaker;
 
-import me.sendpacket.songmaker.player.beat;
+import me.sendpacket.songmaker.player.beat.beat;
 import me.sendpacket.songmaker.player.song.song;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 
 import java.util.ArrayList;
 
@@ -16,4 +17,9 @@ public class global_values {
     public static int current_beat_timer;
     public static song current_song;
     public static beat current_beat;
+    public static boolean testing_beat;
+    public static Sound sound_1 = Sound.BLOCK_NOTE_BLOCK_BASS;
+    public static Sound sound_2 = Sound.BLOCK_NOTE_BLOCK_BANJO;
+    public static Sound sound_3 = Sound.BLOCK_NOTE_BLOCK_CHIME;
+    public static Sound sound_4 = Sound.BLOCK_NOTE_BLOCK_HAT;
 }

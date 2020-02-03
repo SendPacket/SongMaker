@@ -1,7 +1,7 @@
 package me.sendpacket.songmaker.handlers;
 
 import me.sendpacket.songmaker.global_values;
-import me.sendpacket.songmaker.player.beat;
+import me.sendpacket.songmaker.player.beat.beat;
 import me.sendpacket.songmaker.player.player;
 import me.sendpacket.songmaker.player.song.song;
 import me.sendpacket.songmaker.song_maker;

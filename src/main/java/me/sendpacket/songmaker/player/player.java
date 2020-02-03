@@ -1,12 +1,12 @@
 package me.sendpacket.songmaker.player;
 
 import me.sendpacket.songmaker.global_values;
+import me.sendpacket.songmaker.player.beat.beat;
 import me.sendpacket.songmaker.player.song.song;
 import me.sendpacket.songmaker.player.song.song_line;
 import me.sendpacket.songmaker.song_maker;
 import me.sendpacket.songmaker.utils;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class player {
@@ -27,6 +27,7 @@ public class player {
     {
         for(beat b : global_values.beat_list) {
             if(b.get_name().equalsIgnoreCase(id)) { // If beat exists
+                global_values.current_beat_timer = 0;
                 global_values.current_beat = b; // Set current beat
                 if(play)global_values.current_beat.play(); // Play beat
                 return true; // Beat found
@@ -154,18 +155,28 @@ public class player {
                     if(global_values.current_beat_timer > 19)
                     {
                         global_values.current_beat_timer = 0;
+                        if(global_values.testing_beat)
+                        {
+                            global_values.current_beat.stop();
+                            global_values.current_beat = null;
+                            global_values.testing_beat = false;
+                        }
                     }
 
-                    for(Player p : Bukkit.getOnlinePlayers()) {
-                        switch (global_values.current_beat.get_sequence().get(global_values.current_beat_timer)) {
+
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        switch (global_values.current_beat.get_sequence().get(global_values.current_beat_timer).get_s_num()) {
                             case 1:
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.F, 1.F);
+                                p.playSound(p.getLocation(), global_values.sound_1, 1.F, global_values.current_beat.get_sequence().get(global_values.current_beat_timer).get_pitch());
                                 break;
                             case 2:
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.F, 1.F);
+                                p.playSound(p.getLocation(), global_values.sound_2, 1.F, global_values.current_beat.get_sequence().get(global_values.current_beat_timer).get_pitch());
                                 break;
                             case 3:
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1.F, 1.F);
+                                p.playSound(p.getLocation(), global_values.sound_3, 1.F, global_values.current_beat.get_sequence().get(global_values.current_beat_timer).get_pitch());
+                                break;
+                            case 4:
+                                p.playSound(p.getLocation(), global_values.sound_4, 1.F, global_values.current_beat.get_sequence().get(global_values.current_beat_timer).get_pitch());
                                 break;
                             default:
                                 break;
