@@ -10,6 +10,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class player {
+    public static boolean playing = false;
+
     public static boolean change_song(String id, boolean play)
     {
         for(song s : global_values.song_list) {
@@ -101,15 +103,17 @@ public class player {
         global_values.beat_list.clear(); // Clean arraylist
         song_maker.get_logger_handler().send_message(p, "Songs and beats cleared");
     }
-    public static void stop(Player p)
-    {
-        if(global_values.current_beat != null){ // If playing
-            global_values.current_beat.stop(); // Stop
+    public static void stop(Player p) {
+        if (playing) {
+            if (global_values.current_beat != null) { // If playing
+                global_values.current_beat.stop(); // Stop
+            }
+            if (global_values.current_song != null) { // If playing
+                global_values.current_song.stop(); // Stop
+            }
+            song_maker.get_logger_handler().send_message(p, "Song and beat stopped");
+            playing = false;
         }
-        if (global_values.current_song != null) { // If playing
-            global_values.current_song.stop(); // Stop
-        }
-        song_maker.get_logger_handler().send_message(p, "Song and beat stopped");
     }
     public static void play(Player p, String song_name, String beat_name)
     {
@@ -117,6 +121,7 @@ public class player {
             if(player.change_song(song_name, true) && player.change_beat(beat_name, true)) // If song and beat was found
             {
                 song_maker.get_logger_handler().send_message(p, "Starting to play beat & song");
+                playing = true;
             }else{ // Song not found
                 song_maker.get_logger_handler().send_message(p, "Beat or song not found");
             }
