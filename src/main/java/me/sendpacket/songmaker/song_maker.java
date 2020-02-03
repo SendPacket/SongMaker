@@ -5,10 +5,8 @@ import me.sendpacket.songmaker.handlers.gui_handler;
 import me.sendpacket.songmaker.handlers.logger_handler;
 import me.sendpacket.songmaker.player.player;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class song_maker extends JavaPlugin {
@@ -30,6 +28,7 @@ public final class song_maker extends JavaPlugin {
         ////////////////////////////////////
         utils.load_words(); // Add words from text file to arraylist
         player.update_song(); // Start update thread
+        player.update_beat(); // Start update thread
         ////////////////////////////////////
         Bukkit.getServer().getPluginManager().registerEvents(gui_handler, this); // Register events for InventoryClickEvent
         ////////////////////////////////////

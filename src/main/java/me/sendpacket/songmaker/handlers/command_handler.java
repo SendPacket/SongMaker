@@ -1,6 +1,7 @@
 package me.sendpacket.songmaker.handlers;
 
 import me.sendpacket.songmaker.global_values;
+import me.sendpacket.songmaker.player.beat;
 import me.sendpacket.songmaker.player.player;
 import me.sendpacket.songmaker.player.song.song;
 import me.sendpacket.songmaker.song_maker;
@@ -32,6 +33,18 @@ public class command_handler {
                     if (args[0].length() > 0) {
                         try {
                             switch (args[0]) {
+                                case "beat":
+                                    for(beat b : global_values.beat_list)
+                                    {
+                                        String out = "";
+                                        if(b.get_name().equals(args[1])) {
+                                            for (int i = 0; i < 20; i++) {
+                                                out += b.get_sequence().get(i) +",";
+                                            }
+                                        }
+                                        p.sendMessage(out);
+                                    }
+                                    break;
                                 case "gui":
                                     song_maker.get_gui_handler().open_main_menu(p); // Open GUI
                                     break;
@@ -46,12 +59,12 @@ public class command_handler {
                                     break;
                                 case "remove":
                                     if (args[1].length() > 0) {
-                                        player.remove(p, args[1]); // Remove song
+                                        player.remove_song(p, args[1]); // Remove song
                                     }
                                     break;
                                 case "create":
                                     if (args[1].length() > 0 && args[2].length() > 0) {
-                                        player.create(p, args[1], args[2]); // Create new song
+                                        player.create_song(p, args[1], args[2]); // Create new song
                                     }
                                     break;
                                 case "list":
@@ -62,8 +75,8 @@ public class command_handler {
                                     }
                                     break;
                                 case "play":
-                                    if (args[1].length() > 0) {
-                                        player.play(p, args[1]); // Play song with name
+                                    if (args[1].length() > 0 && args[2].length() > 0) {
+                                        player.play(p, args[1], args[2]); // Play song and beat with name
                                     }
                                     break;
                                 default:
