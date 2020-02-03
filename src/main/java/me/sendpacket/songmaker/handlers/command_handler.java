@@ -13,6 +13,7 @@ public class command_handler {
 
     public void display_help(Player p)
     {
+        song_maker.get_logger_handler().send_message(p, "https://github.com/SendPacket/SongMaker");
         song_maker.get_logger_handler().send_message(p, "smk cr [name to rhyme] [name] (Create song)");
         song_maker.get_logger_handler().send_message(p, "smk pl [name] (Start player)");
         song_maker.get_logger_handler().send_message(p, "smk rb name] (Remove beat)");

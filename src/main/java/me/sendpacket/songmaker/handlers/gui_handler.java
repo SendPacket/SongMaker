@@ -5,6 +5,7 @@ import me.sendpacket.songmaker.player.beat.beat;
 import me.sendpacket.songmaker.player.beat.note;
 import me.sendpacket.songmaker.player.player;
 import me.sendpacket.songmaker.player.song.song;
+import me.sendpacket.songmaker.song_maker;
 import me.sendpacket.songmaker.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -173,6 +175,7 @@ public class gui_handler implements Listener {
     @EventHandler
     public void onInventory(InventoryClickEvent e)
     {
+
         if(e.getWhoClicked() instanceof Player) { // If player
             Player p = (Player) e.getWhoClicked();
 
