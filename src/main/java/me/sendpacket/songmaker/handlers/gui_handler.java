@@ -34,36 +34,39 @@ public class gui_handler implements Listener {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         main_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + " Main Menu");
         utils.add_item_background(utils.create_inventory_item(Material.CYAN_STAINED_GLASS_PANE, " "), main_inv);
-        main_inv.setItem(0,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "Songs"));
-        main_inv.setItem(4,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "Beats"));
-        main_inv.setItem(7,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "Play"));
-        main_inv.setItem(8,utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE,ChatColor.GOLD + "Stop"));
+        main_inv.setItem(0,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + " Songs"));
+        main_inv.setItem(4,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + " Beats"));
+        main_inv.setItem(7,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GREEN + " Play"));
+        main_inv.setItem(8,utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE,ChatColor.RED + " Stop"));
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        pre_song_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + "Song - Menu");
+        pre_song_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + " Song - Menu");
         utils.add_item_background(utils.create_inventory_item(Material.CYAN_STAINED_GLASS_PANE, " "), pre_song_inv);
-        pre_song_inv.setItem(1,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "List"));
-        pre_song_inv.setItem(7,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "Create"));
+        pre_song_inv.setItem(1,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + " List"));
+        pre_song_inv.setItem(3,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + " Create"));
+        pre_song_inv.setItem(8,utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE,ChatColor.RED + " Return"));
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         song_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + " List of songs");
         update_song_menu();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        pre_beat_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + "Beat - Menu");
+        pre_beat_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + " Beat - Menu");
         utils.add_item_background(utils.create_inventory_item(Material.CYAN_STAINED_GLASS_PANE, " "), pre_beat_inv);
-        pre_beat_inv.setItem(1,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "List"));
-        pre_beat_inv.setItem(7,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + "Create"));
+        pre_beat_inv.setItem(1,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + " List"));
+        pre_beat_inv.setItem(3,utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE,ChatColor.GOLD + " Create"));
+        pre_beat_inv.setItem(8,utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE,ChatColor.RED + " Return"));
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         beat_inv = Bukkit.createInventory(null, 9, global_values.menu_prefix + ChatColor.DARK_GRAY + " List of beats");
         update_beat_menu();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        create_beat_inv = Bukkit.createInventory(null, 36, global_values.menu_prefix + ChatColor.DARK_GRAY + "Create beat");
+        create_beat_inv = Bukkit.createInventory(null, 36, global_values.menu_prefix + ChatColor.DARK_GRAY + " Create beat");
         update_create_beat_menu();
     }
 
     public void update_create_beat_menu()
     {
-        create_beat_inv = Bukkit.createInventory(null, 36, global_values.menu_prefix + ChatColor.DARK_GRAY + "Create beat");
+        create_beat_inv = Bukkit.createInventory(null, 36, global_values.menu_prefix + ChatColor.DARK_GRAY + " Create beat");
         utils.add_item_background(utils.create_inventory_item(Material.GRAY_STAINED_GLASS_PANE, " "), create_beat_inv);
-        create_beat_inv.setItem(35, utils.create_inventory_item(Material.ORANGE_STAINED_GLASS_PANE, "Save"));
+        create_beat_inv.setItem(35, utils.create_inventory_item(Material.ORANGE_STAINED_GLASS_PANE, ChatColor.GREEN+" Save"));
+        create_beat_inv.setItem(34, utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE, ChatColor.RED+" Return"));
         for(int i = 0; i < 20; i++)
         {
             Material mat = Material.RED_STAINED_GLASS_PANE;
@@ -110,6 +113,8 @@ public class gui_handler implements Listener {
                 }
             }
         }catch (Exception e){}
+
+        song_inv.setItem(inv_size - 1, utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE, ChatColor.RED+"Return"));
     }
 
     public void update_beat_menu()
@@ -133,10 +138,17 @@ public class gui_handler implements Listener {
             for (int i = 0; i < 36; i++) { // Fill inventory with songs in arraylist
                 beat b = global_values.beat_list.get(i);
                 if (b != null) {
-                    beat_inv.setItem(i, utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE, b.get_name()));
+                    String sequence_string = "[";
+                    for(int x = 0; x < 20; x++)
+                    {
+                        sequence_string += (x == 19 ? b.get_sequence().get(x) + "]" : b.get_sequence().get(x) + ",");
+                    }
+                    beat_inv.setItem(i, utils.create_inventory_item(Material.LIME_STAINED_GLASS_PANE, b.get_name(), ChatColor.GOLD+sequence_string));
                 }
             }
         }catch (Exception e){}
+
+        beat_inv.setItem(inv_size - 1, utils.create_inventory_item(Material.RED_STAINED_GLASS_PANE, ChatColor.RED+"Return"));
     }
 
 
@@ -187,6 +199,9 @@ public class gui_handler implements Listener {
                         update_song_menu(); // Update song inventory
                         change_inventory(p, song_inv);
                         break;
+                    case 8:
+                        change_inventory(p, main_inv);
+                        break;
                     default:
                         break;
                 }
@@ -194,10 +209,15 @@ public class gui_handler implements Listener {
             }
 
             if (e.getInventory().equals(song_inv)) {
-                ItemStack item = song_inv.getItem(e.getSlot());
-                if(item != null) {
-                    player.change_song(item.getItemMeta().getDisplayName(), false); // Change song to slot name
-                    player.stop(p);
+                if(e.getSlot() == (beat_inv.getSize() - 1))
+                {
+                    change_inventory(p, pre_song_inv);
+                }else {
+                    ItemStack item = song_inv.getItem(e.getSlot());
+                    if (item != null) {
+                        player.change_song(item.getItemMeta().getDisplayName(), false); // Change song to slot name
+                        player.stop(p);
+                    }
                 }
                 e.setCancelled(true);
             }
@@ -209,9 +229,12 @@ public class gui_handler implements Listener {
                         update_beat_menu(); // Update beat inventory
                         change_inventory(p, beat_inv);
                         break;
-                    case 7:
+                    case 3:
                         update_create_beat_menu();
                         change_inventory(p, create_beat_inv);
+                        break;
+                    case 8:
+                        change_inventory(p, main_inv);
                         break;
                     default:
                         break;
@@ -221,12 +244,17 @@ public class gui_handler implements Listener {
 
             if(e.getInventory().equals(beat_inv))
             {
-                ItemStack item = beat_inv.getItem(e.getSlot());
-                if(item != null) {
-                    for (beat b : global_values.beat_list) {
-                        if(b.get_name().equals(item.getItemMeta().getDisplayName())) {
-                            global_values.current_beat = b;
-                            player.stop(p);
+                if(e.getSlot() == (beat_inv.getSize() - 1))
+                {
+                    change_inventory(p, pre_beat_inv);
+                }else {
+                    ItemStack item = beat_inv.getItem(e.getSlot());
+                    if (item != null) {
+                        for (beat b : global_values.beat_list) {
+                            if (b.get_name().equals(item.getItemMeta().getDisplayName())) {
+                                global_values.current_beat = b;
+                                player.stop(p);
+                            }
                         }
                     }
                 }
@@ -235,22 +263,33 @@ public class gui_handler implements Listener {
 
             if(e.getInventory().equals(create_beat_inv))
             {
-                if(e.getSlot() <= 20)
+                if(e.getSlot() == (create_beat_inv.getSize() - 2))
                 {
-                    int next_i = tmp_beat.get_sequence().get(e.getSlot()) + 1;
-                    if(next_i > 3) next_i = 0;
-                    tmp_beat.get_sequence().put(e.getSlot(), next_i);
-                    update_create_beat_menu();
-                }else{
-                    if(e.getSlot() == 35)
-                    {
-                        beat new_beat = new beat("beat" + global_values.beat_list.size());
-                        new_beat.set_sequence(tmp_beat.get_sequence());
-                        global_values.beat_list.add(new_beat);
+                    change_inventory(p, pre_beat_inv);
+                }else {
+                    if (e.getSlot() <= 20) {
+                        int next_i = tmp_beat.get_sequence().get(e.getSlot()) + 1;
+                        if (e.isShiftClick()) {
+                            tmp_beat.get_sequence().put(e.getSlot(), 0);
+                        } else {
+                            if (next_i > 3) next_i = 0;
+                            tmp_beat.get_sequence().put(e.getSlot(), next_i);
+                        }
                         update_create_beat_menu();
+                    } else {
+                        switch (e.getSlot()) {
+                            case 35:
+                                beat new_beat = new beat("beat" + global_values.beat_list.size());
+                                new_beat.set_sequence(tmp_beat.get_sequence());
+                                global_values.beat_list.add(new_beat);
+                                update_create_beat_menu();
+                                break;
+                            default:
+                                break;
+                        }
                     }
+                    change_inventory(p, create_beat_inv);
                 }
-                change_inventory(p, create_beat_inv);
                 e.setCancelled(true);
             }
         }
