@@ -120,7 +120,7 @@ public class gui_handler implements Listener {
     public void update_beat_menu()
     {
         int inv_size = 9; // Initialize variable
-
+        
         while(global_values.beat_list.size() > inv_size) // If song amount higher than inventory size
         {
             inv_size += 9; // Make inventory bigger
