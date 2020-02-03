@@ -70,18 +70,18 @@ public class gui_handler implements Listener {
             switch(tmp_beat.get_sequence().get(i))
             {
                 case 1:
-                    mat = Material.BLUE_STAINED_GLASS_PANE;
+                    mat = Material.PURPLE_STAINED_GLASS_PANE;
                     break;
                 case 2:
-                    mat = Material.LIME_STAINED_GLASS_PANE;
+                    mat = Material.BLUE_STAINED_GLASS_PANE;
                     break;
                 case 3:
-                    mat = Material.ORANGE_STAINED_GLASS_PANE;
+                    mat = Material.CYAN_STAINED_GLASS_PANE;
                     break;
                 default:
                     break;
             }
-            create_beat_inv.setItem(i, utils.create_inventory_item(mat, "Sound"));
+            create_beat_inv.setItem(i, utils.create_inventory_item(mat, "Sound " + tmp_beat.get_sequence().get(i)));
         }
     }
 

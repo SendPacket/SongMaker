@@ -13,16 +13,15 @@ public class command_handler {
 
     public void display_help(Player p)
     {
-        song_maker.get_logger_handler().send_message(p, "---------");
-        song_maker.get_logger_handler().send_message(p, "smk create [name to rhyme] [name]");
-        song_maker.get_logger_handler().send_message(p, "smk remove name]");
-        song_maker.get_logger_handler().send_message(p, "smk play [name]");
-        song_maker.get_logger_handler().send_message(p, "smk clear");
-        song_maker.get_logger_handler().send_message(p, "smk help");
-        song_maker.get_logger_handler().send_message(p, "smk stop");
-        song_maker.get_logger_handler().send_message(p, "smk list");
-        song_maker.get_logger_handler().send_message(p, "smk gui");
-        song_maker.get_logger_handler().send_message(p, "---------");
+        song_maker.get_logger_handler().send_message(p, "smk cr [name to rhyme] [name] (Create song)");
+        song_maker.get_logger_handler().send_message(p, "smk pl [name] (Start player)");
+        song_maker.get_logger_handler().send_message(p, "smk rb name] (Remove beat)");
+        song_maker.get_logger_handler().send_message(p, "smk rs name] (Remove song)");
+        song_maker.get_logger_handler().send_message(p, "smk cl (Clear player)");
+        song_maker.get_logger_handler().send_message(p, "smk sp (Stop player)");
+        song_maker.get_logger_handler().send_message(p, "smk ls (List player)");
+        song_maker.get_logger_handler().send_message(p, "smk gui (Open GUI)");
+        song_maker.get_logger_handler().send_message(p, "smk h (Help)");
     }
 
     public void onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,48 +32,46 @@ public class command_handler {
                     if (args[0].length() > 0) {
                         try {
                             switch (args[0]) {
-                                case "beat":
-                                    for(beat b : global_values.beat_list)
-                                    {
-                                        String out = "";
-                                        if(b.get_name().equals(args[1])) {
-                                            for (int i = 0; i < 20; i++) {
-                                                out += b.get_sequence().get(i) +",";
-                                            }
-                                        }
-                                        p.sendMessage(out);
-                                    }
-                                    break;
                                 case "gui":
                                     song_maker.get_gui_handler().open_main_menu(p); // Open GUI
                                     break;
-                                case "clear":
+                                case "cl":
                                     player.clear(p); // Clear ArrayLists
                                     break;
-                                case "help":
+                                case "h":
                                     display_help(p); // Display help
                                     break;
-                                case "stop":
-                                    player.stop(p); // Stop song
+                                case "sp":
+                                    player.stop(p); // Stop player
                                     break;
-                                case "remove":
+                                case "rb":
+                                    if (args[1].length() > 0) {
+                                        player.remove_beat(p, args[1]); // Remove beat
+                                    }
+                                    break;
+                                case "rs":
                                     if (args[1].length() > 0) {
                                         player.remove_song(p, args[1]); // Remove song
                                     }
                                     break;
-                                case "create":
+                                case "cr":
                                     if (args[1].length() > 0 && args[2].length() > 0) {
                                         player.create_song(p, args[1], args[2]); // Create new song
                                     }
                                     break;
-                                case "list":
+                                case "ls":
                                     // Display songs
                                     song_maker.get_logger_handler().send_message(p, "--------Song-List--------");
                                     for (song s : global_values.song_list) {
                                         song_maker.get_logger_handler().send_message(p, s.get_name());
                                     }
+                                    // Display beats
+                                    song_maker.get_logger_handler().send_message(p, "--------Beat-List--------");
+                                    for (beat b : global_values.beat_list) {
+                                        song_maker.get_logger_handler().send_message(p, b.get_name());
+                                    }
                                     break;
-                                case "play":
+                                case "pl":
                                     if (args[1].length() > 0 && args[2].length() > 0) {
                                         player.play(p, args[1], args[2]); // Play song and beat with name
                                     }
