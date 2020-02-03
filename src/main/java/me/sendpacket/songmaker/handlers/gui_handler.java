@@ -197,6 +197,7 @@ public class gui_handler implements Listener {
                 ItemStack item = song_inv.getItem(e.getSlot());
                 if(item != null) {
                     player.change_song(item.getItemMeta().getDisplayName(), false); // Change song to slot name
+                    player.stop(p);
                 }
                 e.setCancelled(true);
             }
@@ -225,6 +226,7 @@ public class gui_handler implements Listener {
                     for (beat b : global_values.beat_list) {
                         if(b.get_name().equals(item.getItemMeta().getDisplayName())) {
                             global_values.current_beat = b;
+                            player.stop(p);
                         }
                     }
                 }
