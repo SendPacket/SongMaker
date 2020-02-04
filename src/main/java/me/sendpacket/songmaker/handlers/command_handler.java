@@ -1,5 +1,6 @@
 package me.sendpacket.songmaker.handlers;
 
+import me.sendpacket.easyguilib.gui_utils;
 import me.sendpacket.songmaker.global_values;
 import me.sendpacket.songmaker.player.beat.beat;
 import me.sendpacket.songmaker.player.player;
@@ -34,7 +35,8 @@ public class command_handler {
                         try {
                             switch (args[0]) {
                                 case "gui":
-                                    song_maker.get_gui_handler().open_main_menu(p); // Open GUI
+                                    gui_utils.open_gui(p, "gui_1");
+                                    //song_maker.get_gui_handler().open_main_menu(p); // Open GUI
                                     break;
                                 case "cl":
                                     player.clear(p); // Clear ArrayLists
