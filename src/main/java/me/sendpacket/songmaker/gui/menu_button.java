@@ -8,6 +8,7 @@ import me.sendpacket.songmaker.player.beat.note;
 import me.sendpacket.songmaker.player.player;
 import me.sendpacket.songmaker.player.song.song;
 import me.sendpacket.songmaker.song_maker;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -153,32 +154,34 @@ public class menu_button {
                 for (gui_window w : menu.g.get_windows()) {
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         for (gui_item item : w.get_items()) {
-                            if (item.pressed_value(p) > 0) {
-                                if (item.is_return_button()) {
-                                    gui_utils.jump_to_window(p, item.get_window_id_to_return());
-                                } else {
-                                    switch (w.get_id()) {
-                                        case 0:
-                                            update_main_window_buttons(p, item);
-                                            break;
-                                        case 1:
-                                            update_pre_song_buttons(p, item);
-                                            break;
-                                        case 2:
-                                            update_pre_beat_buttons(p, item);
-                                            break;
-                                        case 3:
-                                            update_song_selection_buttons(p, item.get_slot());
-                                            break;
-                                        case 4:
-                                            update_beat_selection_buttons(p, item.get_slot());
-                                            break;
-                                        case 5:
-                                            update_beat_creation_buttons(p, item.get_slot(), item, item.pressed_value(p));
-                                            break;
+                            if (ArrayUtils.contains(global_values.gui_button_list, item.get_type())) {
+                                if (item.pressed_value(p) > 0) {
+                                    if (item.get_type().equals(gui_item_type.return_button)) {
+                                        gui_utils.jump_to_window(p, ((gui_item_returnbutton)item).get_window_id_to_return());
+                                    } else {
+                                        switch (w.get_id()) {
+                                            case 0:
+                                                update_main_window_buttons(p, item);
+                                                break;
+                                            case 1:
+                                                update_pre_song_buttons(p, item);
+                                                break;
+                                            case 2:
+                                                update_pre_beat_buttons(p, item);
+                                                break;
+                                            case 3:
+                                                update_song_selection_buttons(p, item.get_slot());
+                                                break;
+                                            case 4:
+                                                update_beat_selection_buttons(p, item.get_slot());
+                                                break;
+                                            case 5:
+                                                update_beat_creation_buttons(p, item.get_slot(), item, item.pressed_value(p));
+                                                break;
+                                        }
                                     }
+                                    item.not_pressed(p);
                                 }
-                                item.not_pressed(p);
                             }
                         }
                     }

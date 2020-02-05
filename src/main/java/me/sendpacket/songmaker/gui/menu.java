@@ -18,10 +18,10 @@ public class menu {
     {
         gui_window main_menu = new gui_window("main_menu",0,9,g);
 
-        main_menu.get_items().add(new gui_item("pre_song","Songs","",1, Material.ORANGE_STAINED_GLASS_PANE));
-        main_menu.get_items().add(new gui_item("pre_beat","Beats","",3, Material.ORANGE_STAINED_GLASS_PANE));
-        main_menu.get_items().add(new gui_item("song_play","Play","",7, Material.LIME_STAINED_GLASS_PANE));
-        main_menu.get_items().add(new gui_item("song_stop","Stop","",8, Material.RED_STAINED_GLASS_PANE));
+        main_menu.get_items().add(new gui_item_button("pre_song","Songs","",1, Material.ORANGE_STAINED_GLASS_PANE));
+        main_menu.get_items().add(new gui_item_button("pre_beat","Beats","",3, Material.ORANGE_STAINED_GLASS_PANE));
+        main_menu.get_items().add(new gui_item_button("song_play","Play","",7, Material.LIME_STAINED_GLASS_PANE));
+        main_menu.get_items().add(new gui_item_button("song_stop","Stop","",8, Material.RED_STAINED_GLASS_PANE));
 
         g.set_main_window(main_menu);
     }
@@ -34,10 +34,10 @@ public class menu {
         int slot = 0;
         for(beat b : global_values.beat_list)
         {
-            window.get_items().add(new gui_item("s_"+b.get_name(), b.get_name(), "",slot, Material.LIME_STAINED_GLASS_PANE));
+            window.get_items().add(new gui_item_button("s_"+b.get_name(), b.get_name(), "",slot, Material.LIME_STAINED_GLASS_PANE));
             slot += 1;
         }
-        window.get_items().add(new gui_item("", "Return", "",53, 2));
+        window.get_items().add(new gui_item_returnbutton("", "Return", "",53, 2));
     }
 
     public static void update_song_window()
@@ -48,10 +48,10 @@ public class menu {
         int slot = 0;
         for(song s : global_values.song_list)
         {
-            window.get_items().add(new gui_item("s_"+s.get_name(), s.get_name(), "",slot, Material.LIME_STAINED_GLASS_PANE));
+            window.get_items().add(new gui_item_button("s_"+s.get_name(), s.get_name(), "",slot, Material.LIME_STAINED_GLASS_PANE));
             slot += 1;
         }
-        window.get_items().add(new gui_item("", "Return", "",53, 2));
+        window.get_items().add(new gui_item_returnbutton("", "Return", "",53, 2));
     }
 
     public static void list_beat_window()
@@ -76,9 +76,9 @@ public class menu {
     {
         gui_window window = new gui_window(("pre_beat"), 2, 9, g);
 
-        window.get_items().add(new gui_item("beats_list", "Beats", "",1, Material.BLUE_STAINED_GLASS_PANE));
-        window.get_items().add(new gui_item("beats_create", "Create", "",3, Material.BLUE_STAINED_GLASS_PANE));
-        window.get_items().add(new gui_item("", "Return", "",8, 0));
+        window.get_items().add(new gui_item_button("beats_list", "Beats", "",1, Material.BLUE_STAINED_GLASS_PANE));
+        window.get_items().add(new gui_item_button("beats_create", "Create", "",3, Material.BLUE_STAINED_GLASS_PANE));
+        window.get_items().add(new gui_item_returnbutton("", "Return", "",8, 0));
 
         g.add_window(window);
     }
@@ -87,8 +87,8 @@ public class menu {
     {
         gui_window window = new gui_window(("pre_song"), 1, 9, g);
 
-        window.get_items().add(new gui_item("songs_list", "Songs", "",1, Material.BLUE_STAINED_GLASS_PANE));
-        window.get_items().add(new gui_item("", "Return", "",8, 0));
+        window.get_items().add(new gui_item_button("songs_list", "Songs", "",1, Material.BLUE_STAINED_GLASS_PANE));
+        window.get_items().add(new gui_item_returnbutton("", "Return", "",8, 0));
 
         g.add_window(window);
     }
@@ -119,12 +119,12 @@ public class menu {
                     break;
             }
 
-            window.get_items().add(new gui_item("beat_tick_"+i,  tmp_beat.get_sequence().get(i).get_s_num() > 0 ? "Sound " + tmp_beat.get_sequence().get(i).get_s_num() : " ", tmp_beat.get_sequence().get(i).get_s_num() > 0 ?"Pitch " + tmp_beat.get_sequence().get(i).get_pitch() : " ", i,mat));
+            window.get_items().add(new gui_item_button("beat_tick_"+i,  tmp_beat.get_sequence().get(i).get_s_num() > 0 ? "Sound " + tmp_beat.get_sequence().get(i).get_s_num() : " ", tmp_beat.get_sequence().get(i).get_s_num() > 0 ?"Pitch " + tmp_beat.get_sequence().get(i).get_pitch() : " ", i,mat));
         }
 
-        window.get_items().add(new gui_item("test_beat", "Test", "",23, Material.LIME_STAINED_GLASS_PANE));
-        window.get_items().add(new gui_item("save_beat", "Save", "",24, Material.ORANGE_STAINED_GLASS_PANE));
-        window.get_items().add(new gui_item("", "Return", "",26, 2));
+        window.get_items().add(new gui_item_button("test_beat", "Test", "",23, Material.LIME_STAINED_GLASS_PANE));
+        window.get_items().add(new gui_item_button("save_beat", "Save", "",24, Material.ORANGE_STAINED_GLASS_PANE));
+        window.get_items().add(new gui_item_returnbutton("", "Return", "",26, 2));
     }
 
     public static void create_beat_window()
