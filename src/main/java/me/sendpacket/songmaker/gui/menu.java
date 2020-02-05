@@ -51,7 +51,7 @@ public class menu {
             window.get_items().add(new gui_item_button("s_"+s.get_name(), s.get_name(), "",slot, Material.LIME_STAINED_GLASS_PANE));
             slot += 1;
         }
-        window.get_items().add(new gui_item_returnbutton("", "Return", "",53, 2));
+        window.get_items().add(new gui_item_returnbutton("", "Return", "",53, 1));
     }
 
     public static void list_beat_window()
