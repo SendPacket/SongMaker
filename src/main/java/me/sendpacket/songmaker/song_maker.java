@@ -4,7 +4,6 @@ import me.sendpacket.easyguilib.gui_update;
 import me.sendpacket.songmaker.gui.menu;
 import me.sendpacket.songmaker.gui.menu_button;
 import me.sendpacket.songmaker.handlers.command_handler;
-import me.sendpacket.songmaker.handlers.gui_handler;
 import me.sendpacket.songmaker.handlers.logger_handler;
 import me.sendpacket.songmaker.player.player;
 import org.bukkit.Bukkit;
@@ -17,7 +16,6 @@ public final class song_maker extends JavaPlugin {
     private static JavaPlugin plugin;
     private static command_handler cmd_handler;
     private static logger_handler logger_handler;
-    private static gui_handler gui_handler;
     private static menu menu_handler;
 
     @Override
@@ -28,8 +26,6 @@ public final class song_maker extends JavaPlugin {
         menu_handler = new menu(); // Initialize variable
         cmd_handler = new command_handler(); // Initialize variable
         logger_handler = new logger_handler(); // Initialize variable
-        gui_handler = new gui_handler(); // Initialize variable
-        gui_handler.load_menu(); // Initialize variables and set inventory contents
         ////////////////////////////////////
         menu_handler.load(); // Start GUI
         menu_button.menu_button_update(); // Start GUI Button Thread
@@ -37,8 +33,7 @@ public final class song_maker extends JavaPlugin {
         player.update_song(); // Start update thread
         player.update_beat(); // Start update thread
         ////////////////////////////////////
-        Bukkit.getServer().getPluginManager().registerEvents(gui_handler, this); // Register events for InventoryClickEvent
-        Bukkit.getServer().getPluginManager().registerEvents(new gui_update(), this); // Register events for InventoryClickEvent
+        Bukkit.getServer().getPluginManager().registerEvents(new gui_update(), this); // Register events for InventoryEvents
         ////////////////////////////////////
     }
 
@@ -51,10 +46,6 @@ public final class song_maker extends JavaPlugin {
     public static JavaPlugin get_java_plugin()
     {
         return plugin;
-    }
-    public static gui_handler get_gui_handler()
-    {
-        return gui_handler;
     }
     public static command_handler get_command_handler()
     {
