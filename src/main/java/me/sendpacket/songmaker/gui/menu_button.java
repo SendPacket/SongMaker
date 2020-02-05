@@ -19,10 +19,10 @@ public class menu_button {
     {
         switch (item.get_id()) {
             case "pre_song":
-                gui_utils.jump_to_window(p, 1);
+                gui_utils.jump_to_window(p,menu.g, 1);
                 break;
             case "pre_beat":
-                gui_utils.jump_to_window(p, 2);
+                gui_utils.jump_to_window(p,menu.g, 2);
                 break;
             case "song_play":
                 if(global_values.current_beat != null && global_values.current_song != null) {
@@ -40,7 +40,7 @@ public class menu_button {
         switch (item.get_id()) {
             case "songs_list":
                 menu.update_song_window();
-                gui_utils.jump_to_window(p, 3);
+                gui_utils.jump_to_window(p,menu.g, 3);
                 break;
         }
     }
@@ -50,11 +50,11 @@ public class menu_button {
         switch (item.get_id()) {
             case "beats_list":
                 menu.update_beat_window();
-                gui_utils.jump_to_window(p, 4);
+                gui_utils.jump_to_window(p,menu.g, 4);
                 break;
             case "beats_create":
                 menu.update_create_beat_window();
-                gui_utils.jump_to_window(p, 5);
+                gui_utils.jump_to_window(p,menu.g, 5);
                 break;
         }
     }
@@ -143,7 +143,7 @@ public class menu_button {
         }
 
         menu.update_create_beat_window();
-        gui_utils.jump_to_window(p, 5);
+        gui_utils.jump_to_window(p, menu.g, 5);
     }
 
     public static void menu_button_update()
@@ -157,7 +157,7 @@ public class menu_button {
                             if (ArrayUtils.contains(global_values.gui_button_list, item.get_type())) {
                                 if (item.pressed_value(p) > 0) {
                                     if (item.get_type().equals(gui_item_type.return_button)) {
-                                        gui_utils.jump_to_window(p, ((gui_item_returnbutton)item).get_window_id_to_return());
+                                        gui_utils.jump_to_window(p, menu.g,((gui_item_returnbutton)item).get_window_id_to_return());
                                     } else {
                                         switch (w.get_id()) {
                                             case 0:
