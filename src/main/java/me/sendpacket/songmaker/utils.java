@@ -56,12 +56,17 @@ public class utils {
             found = true; // No need to skip words
         }
 
-        for(String w : global_values.word_list) // Words from file
+        for(String txt_w : global_values.word_list) // Words from file
         {
-            if(w.equalsIgnoreCase(ignore_words_until)) // If the word is the one that we want to avoid
+            String w = txt_w;
+            if(txt_w.contains(":")) {
+                w = txt_w.split(":")[0];
+            }
+
+            if (w.equalsIgnoreCase(ignore_words_until)) // If the word is the one that we want to avoid
             {
                 found = true; // We found the word
-            }else {
+            } else {
                 if (found) { // If the word was found
                     String word_rhyme = ""; // Initialize variable
                     if (w.length() > 3) { // If the word is long enough to use substring
