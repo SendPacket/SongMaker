@@ -113,7 +113,9 @@ public class player {
             if (global_values.current_song != null) { // If playing
                 global_values.current_song.stop(); // Stop
             }
-            song_maker.get_logger_handler().send_message(p, "Song and beat stopped");
+            if(p != null) {
+                song_maker.get_logger_handler().send_message(p, "Song and beat stopped");
+            }
             playing = false;
         }
     }
@@ -138,9 +140,15 @@ public class player {
             {
                 if(global_values.current_song.isPlaying())
                 {
-                    song_line line = global_values.current_song.get_lines().get(global_values.current_song.get_current_line()); // Get words to display
-                    Bukkit.broadcastMessage(line.get_words()); // Display words
-                    global_values.current_song.next_line(); // Set next words
+                    if(global_values.current_song.get_current_line() < global_values.current_song.get_lines().size()) {
+                        song_line line = global_values.current_song.get_lines().get(global_values.current_song.get_current_line()); // Get words to display
+                        Bukkit.broadcastMessage(line.get_words()); // Display words
+                        global_values.current_song.next_line(); // Set next words
+                    }else{
+                        // Out of lines
+                        song_maker.get_logger_handler().broadcast_message("Song and beat stopped (Out of lines)");
+                        player.stop(null);
+                    }
                 }
             }
         },0L,40L);
