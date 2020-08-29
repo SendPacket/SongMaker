@@ -4,4 +4,4 @@ Thanks to the narrator function found in the new versions of Minecraft.
 
 # Dependencies
 This plugin requires my GUI Lib
-https://github.com/network-dev/EzGUILib
+https://github.com/network-dev/EasyGuiLib
